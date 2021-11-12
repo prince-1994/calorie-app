@@ -44,7 +44,8 @@ INSTALLED_APPS = [
     'django_filters',
 
     # local
-    'calories'
+    'calories',
+    'userprofiles',
 ]
 
 MIDDLEWARE = [
