@@ -28,6 +28,9 @@ export default {
 
   // Plugins to run before rendering page: https://go.nuxtjs.dev/config-plugins
   plugins: [
+    { src: '~/plugins/common-utils.js' },
+    { src: '~/plugins/axios.js' },
+    { src: '~/plugins/repository.js' },
   ],
 
   // Auto import components: https://go.nuxtjs.dev/config-components
@@ -48,9 +51,12 @@ export default {
   ],
 
   // Axios module configuration: https://go.nuxtjs.dev/config-axios
-  axios: {},
+  axios: {
+    baseURL: 'http://localhost:8000',
+    retry: true,
+  },
 
   // Build Configuration: https://go.nuxtjs.dev/config-build
   build: {
-  }
+  },
 }

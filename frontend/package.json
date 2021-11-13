@@ -13,9 +13,11 @@
   },
   "dependencies": {
     "@nuxtjs/axios": "^5.13.6",
+    "camelize": "^1.0.0",
     "core-js": "^3.15.1",
     "nuxt": "^2.15.7",
-    "nuxt-buefy": "^0.4.8"
+    "nuxt-buefy": "^0.4.8",
+    "snakeize": "^0.1.0"
   },
   "devDependencies": {
     "@babel/eslint-parser": "^7.14.7",
