@@ -54,11 +54,9 @@
         :entries="dateData.entries"
         :total-calorie="dateData.totalCalorie"
         :has-reached-limit="dateData.hasReachedLimit"
-        :source="currentUrl"
       >
       </day-food-entry-card>
     </section>
-    <section class=""></section>
   </div>
 </template>
 
@@ -78,6 +76,16 @@ export default {
       ? new Date(new Date(query.endDate).getTime() + day)
       : null
     const endDateStr = tempEndDate ? tempEndDate.toISOString() : null
+    if (
+      startDateStr &&
+      endDateStr &&
+      new Date(startDateStr) > new Date(endDateStr)
+    ) {
+      store.dispatch('addMessage', {
+        message: 'Start date should be less than end Date.',
+        type: 'error',
+      })
+    }
     const response = await $repositories.foodEntries.index({
       params: {
         consumed_at__gte: startDateStr,
@@ -116,12 +124,10 @@ export default {
     for (const item of allDatesData) {
       item.entries.sort((a, b) => a.consumedAtDate - b.consumedAtDate)
     }
-    const currentUrl = window.location.pathname
     return {
       allDatesData,
       startDate: query.startDate ? new Date(query.startDate) : null,
       endDate: query.endDate ? new Date(query.endDate) : null,
-      currentUrl,
     }
   },
 

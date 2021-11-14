@@ -19,7 +19,7 @@
     </div>
     <hr />
     <b-table :data="entries">
-      <b-table-column field="name" label="Item Name" width="">
+      <b-table-column field="name" label="Item Name" width="300">
         <template #default="props">
           {{ props.row.name }}
         </template>
@@ -37,9 +37,7 @@
       </b-table-column>
       <b-table-column field="cheat" label="Info">
         <template #default="props">
-          <b-tag v-show="props.row.isInactive" type="is-info"
-            >Cheat</b-tag
-          >
+          <b-tag v-show="props.row.isInactive" type="is-info">Cheat</b-tag>
         </template>
       </b-table-column>
       <b-table-column field="manage" label="Manage">
@@ -48,7 +46,7 @@
             type="is-success"
             icon-left="pencil"
             tag="router-link"
-            :to="`/edit/${props.row.id}?source=${source ? source : ''}`"
+            :to="`/edit/${props.row.id}`"
           ></b-button>
         </template>
       </b-table-column>
@@ -78,11 +76,6 @@ export default {
     hasReachedLimit: {
       type: Boolean,
       default: false,
-    },
-
-    source: {
-      type: String,
-      default: null,
     },
   },
 }
