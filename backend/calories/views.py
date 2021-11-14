@@ -8,7 +8,7 @@ class FoodCalorieViewSet(viewsets.ModelViewSet):
     permission_classes = (IsAuthenticated,)
     ordering_fields = ('consumed_at',)
     filterset_fields = {
-        'consumed_at' : ['gte', 'lte']
+        'consumed_at' : ['gte', 'lte', 'gt', 'lt']
     }
     
     def get_queryset(self):
