@@ -71,18 +71,15 @@ export default {
   async asyncData({ query, $repositories, store }) {
     const response = await $repositories.foodEntries.index({ params: query })
     const data = {}
-    const dateOptions = { year: 'numeric', month: 'numeric', day: 'numeric' }
-    const timeOptions = {
-      hour: 'numeric',
-      minute: 'numeric',
-      second: 'numeric',
-    }
+    const dateOptions = { year: 'numeric', month: 'long', day: 'numeric' }
+    const timeOptions = { hour: '2-digit', minute: '2-digit' }
     for (const item of response) {
       const dateTime = new Date(item.consumedAt)
-      const timeStr = dateTime.toLocaleDateString('en-US', timeOptions)
+      const timeStr = dateTime.toLocaleTimeString('en-US', timeOptions)
       const dateStr = dateTime.toLocaleDateString('en-US', dateOptions)
       item.dateStr = dateStr
       item.timeStr = timeStr
+      item.consumedAtDate = dateTime
       if (!data[dateStr]) {
         data[dateStr] = {
           dateStr,
@@ -102,6 +99,9 @@ export default {
 
     const allDatesData = Object.values(data)
     allDatesData.sort((a, b) => b.date - a.date)
+    for (const item of allDatesData) {
+      item.entries.sort((a, b) => a.consumedAtDate - b.consumedAtDate)
+    }
     return {
       allDatesData,
     }
