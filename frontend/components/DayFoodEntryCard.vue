@@ -51,30 +51,6 @@
         </template>
       </b-table-column>
     </b-table>
-
-    <!-- <div
-      v-for="(entry, index) in entries"
-      :key="entry.id"
-      class="is-flex is-justify-content-space-between box"
-    >
-      <div class="">
-        <div class="is-flex is-justify-content-space-between">
-          <div>{{ index + 1 }}.</div>
-          <div class="mx-2">{{ entry.name }} - {{ entry.timeStr }}</div>
-
-          <div class="mx-2">{{ entry.calorie }} calories</div>
-          <b-tag v-show="entry.isInactive" type="is-info">Cheat</b-tag>
-        </div>
-      </div>
-      <b-button
-        type="is-danger"
-        outlined
-        icon-right="pencil"
-        tag="nuxt-link"
-        :to="`/edit/${entry.id}`"
-        >Manage</b-button
-      >
-    </div> -->
   </div>
 </template>
 
