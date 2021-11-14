@@ -25,9 +25,7 @@
           <b-button v-if="foodEntry.id" type="is-danger" @click="deleteEntry"
             >Delete</b-button
           >
-          <b-button type="is-danger" outlined tag="router-link" to="/"
-            >Cancel</b-button
-          >
+          <b-button type="is-danger" outlined @click="cancel">Cancel</b-button>
         </div>
       </form>
     </div>
@@ -36,7 +34,7 @@
 
 <script>
 export default {
-  async asyncData({ $repositories, params }) {
+  async asyncData({ $repositories, params, query }) {
     let foodEntry = {}
 
     if (params.id) {
@@ -52,6 +50,7 @@ export default {
           ? new Date(foodEntry.consumedAt)
           : new Date(),
       },
+      source: query.source,
     }
   },
 
@@ -71,11 +70,11 @@ export default {
       result
         .then((result) => {
           this.foodEntry = result
-          this.$router.push('/')
+          this.$router.go(-1)
         })
         .catch((err) => {
-          this.$store.addTemporaryMessage({
-            message: err.response.detail,
+          this.$store.dispatch('addTemporaryMessage', {
+            message: err.response,
             type: 'error',
           })
         })
@@ -89,11 +88,15 @@ export default {
       this.$repositories.foodEntries
         .delete(this.foodEntry.id)
         .then(() => {
-          this.$router.push('/')
+          this.$router.go(-1)
         })
         .finally(() => {
           this.$nuxt.$loading.finish()
         })
+    },
+
+    cancel() {
+      this.$router.go(-1)
     },
   },
 }

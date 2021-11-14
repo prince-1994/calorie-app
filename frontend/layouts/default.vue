@@ -1,9 +1,9 @@
 <template>
   <div class="columns is-centered">
     <div class="column is-10">
-      <b-navbar>
+      <b-navbar :mobile-burger="false">
         <template #brand>
-          <b-navbar-item tag="router-link" :to="{ path: '/' }">
+          <b-navbar-item tag="router-link" :to="{ path: '/?' }">
             <strong class="is-size-3">Simple Calorie App</strong>
           </b-navbar-item>
         </template>

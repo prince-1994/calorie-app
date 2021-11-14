@@ -46,7 +46,7 @@
             type="is-success"
             icon-left="pencil"
             tag="router-link"
-            :to="`/edit/${props.row.id}`"
+            :to="`/edit/${props.row.id}?source=${source ? source : ''}`"
           ></b-button>
         </template>
       </b-table-column>
@@ -76,6 +76,11 @@ export default {
     hasReachedLimit: {
       type: Boolean,
       default: false,
+    },
+
+    source: {
+      type: String,
+      default: null,
     },
   },
 }

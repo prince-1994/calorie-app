@@ -40,7 +40,7 @@
             <b-button
               native-type="submit"
               tag="router-link"
-              :to="`/?consumed_at__gte=${startDate}&consumed_at__lt=${endDate}`"
+              :to="dateQueryLink"
               type="is-primary"
               >Submit</b-button
             >
@@ -54,6 +54,7 @@
         :entries="dateData.entries"
         :total-calorie="dateData.totalCalorie"
         :has-reached-limit="dateData.hasReachedLimit"
+        :source="currentUrl"
       >
       </day-food-entry-card>
     </section>
@@ -69,7 +70,20 @@ export default {
   middleware: ['auth'],
 
   async asyncData({ query, $repositories, store }) {
-    const response = await $repositories.foodEntries.index({ params: query })
+    const startDateStr = query.startDate
+      ? new Date(query.startDate).toISOString()
+      : null
+    const day = 60 * 60 * 24 * 1000
+    const tempEndDate = query.endDate
+      ? new Date(new Date(query.endDate).getTime() + day)
+      : null
+    const endDateStr = tempEndDate ? tempEndDate.toISOString() : null
+    const response = await $repositories.foodEntries.index({
+      params: {
+        consumed_at__gte: startDateStr,
+        consumed_at__lt: endDateStr,
+      },
+    })
     const data = {}
     const dateOptions = { year: 'numeric', month: 'long', day: 'numeric' }
     const timeOptions = { hour: '2-digit', minute: '2-digit' }
@@ -102,28 +116,30 @@ export default {
     for (const item of allDatesData) {
       item.entries.sort((a, b) => a.consumedAtDate - b.consumedAtDate)
     }
+    const currentUrl = window.location.pathname
     return {
       allDatesData,
-    }
-  },
-
-  data() {
-    return {
-      startDate: null,
-      endDate: null,
+      startDate: query.startDate ? new Date(query.startDate) : null,
+      endDate: query.endDate ? new Date(query.endDate) : null,
+      currentUrl,
     }
   },
 
   computed: {
-    submitQueryLink() {
-      return ''
+    dateQueryLink() {
+      const startDateStr = this.startDate ? this.startDate.toISOString() : null
+      const endDateStr = this.endDate ? this.endDate.toISOString() : null
+      if (startDateStr && endDateStr) {
+        return `/?startDate=${startDateStr}&endDate=${endDateStr}`
+      } else if (startDateStr) {
+        return `/?startDate=${startDateStr}`
+      } else if (endDateStr) {
+        return `/?endDate=${endDateStr}`
+      } else {
+        return '/'
+      }
     },
   },
-  watchQuery: [
-    'consumed_at__gte',
-    'consumed_at__lt',
-    'consumed_at__lte',
-    'consumed_at__gt',
-  ],
+  watchQuery: ['startDate', 'endDate'],
 }
 </script>

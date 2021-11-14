@@ -4,6 +4,7 @@ export const state = () => ({
   messageCounter: 0,
   userProfile: null,
   authenticated: false,
+  lastUrl: null,
 })
 
 export const mutations = {
@@ -34,6 +35,10 @@ export const mutations = {
 
   setAuthenticated(state, authenticated) {
     state.authenticated = authenticated
+  },
+
+  setLastUrl(state, url) {
+    state.lastUrl = url
   },
 }
 
