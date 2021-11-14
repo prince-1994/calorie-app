@@ -72,11 +72,8 @@ export default {
           this.foodEntry = result
           this.$router.go(-1)
         })
-        .catch((err) => {
-          this.$store.dispatch('addTemporaryMessage', {
-            message: err.response,
-            type: 'error',
-          })
+        .catch(() => {
+          // do nothing
         })
         .finally(() => {
           this.$nuxt.$loading.finish()

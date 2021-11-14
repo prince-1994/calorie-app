@@ -6,8 +6,8 @@
           <span class="is-size-5"
             ><strong>{{ dateStr }}</strong></span
           >
-          <b-tag v-show="hasReachedLimit" class="mr-2" type="is-danger"
-            >Limit Exceeded</b-tag
+          <b-tag v-show="hasReachedLimit" class="mr-2" type="is-danger is-light"
+            >Calorie Limit Exceeded</b-tag
           >
         </p>
       </div>
@@ -37,7 +37,9 @@
       </b-table-column>
       <b-table-column field="cheat" label="Info">
         <template #default="props">
-          <b-tag v-show="props.row.isInactive" type="is-info">Cheat</b-tag>
+          <b-tag v-show="props.row.isInactive" type="is-info"
+            >Cheat</b-tag
+          >
         </template>
       </b-table-column>
       <b-table-column field="manage" label="Manage">
