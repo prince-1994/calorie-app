@@ -5,7 +5,7 @@ export default (ctx, inject) => {
   // And in the Vue instances (this.$repository in your components)
   const repositoryWithAxios = createRepository(ctx.$axios)
   const repositories = {
-    foodEntries: repositoryWithAxios('/api/calories/food/'),
+    foodEntries: repositoryWithAxios('/api/calories/food'),
   }
   inject('repositories', repositories)
 }

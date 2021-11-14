@@ -58,13 +58,13 @@ export const actions = {
     return this.$axios
       .get('/api/userprofiles/profiles/')
       .then((result) => {
-        context.commit('setUserProfile',result)
-        context.commit('setAuthenticated',true)
+        context.commit('setUserProfile', result.data)
+        context.commit('setAuthenticated', true)
       })
-      .catch( () => {
+      .catch(() => {
         context.dispatch('addTemporaryMessage', {
           message: 'Authentication has failed. Please set your user token.',
-          type: 'error'
+          type: 'error',
         })
         context.commit('setAuthenticated', false)
       })

@@ -10,7 +10,7 @@
         <template #start> </template>
         <template #end> </template>
       </b-navbar>
-      <div class="column">
+      <div class="">
         <b-message
           v-for="message in $store.state.messages"
           :key="message.id"
