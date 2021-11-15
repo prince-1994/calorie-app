@@ -1,9 +1,14 @@
-from rest_framework.test import APITestCase, APIRequestFactory
+from rest_framework.test import APITestCase
 from django.urls import reverse
 from rest_framework import status
 from rest_framework.authtoken.models import Token
 from django.contrib.auth import get_user_model
 import json
+from django.test import TestCase
+from .models import FoodCalorie
+from django.utils import timezone
+from datetime import timedelta
+import math
 
 class FoodCalorieViewSetTests(APITestCase):
 
@@ -20,6 +25,7 @@ class FoodCalorieViewSetTests(APITestCase):
         cls.data_consumed_at_missing = { 'name': 'Dahi Papdi', 'calorie': 13, 'is_inactive': False }
         cls.data_name_missing = { 'consumed_at': '2021-11-12T11:45:19Z', 'calorie': 13, 'is_inactive': False }
         cls.data_calorie_missing = { 'consumed_at': '2021-11-12T11:45:19Z', 'name': 'Dahi Papdi', 'is_inactive': False }
+        cls.data_calorie_negative = { 'consumed_at': '2021-11-12T11:45:19Z', 'calorie': -13, 'name': 'Dahi Papdi', 'is_inactive': False }
         cls.data_food_calorie_list = [cls.data_full_1, cls.data_full_2]
         cls.data_food_calorie_list_with_ids = [cls.data_full_1_with_id, cls.data_full_2_with_id]
         return super().setUpTestData()
@@ -43,6 +49,9 @@ class FoodCalorieViewSetTests(APITestCase):
         self.assertEqual(response.status_code, status.HTTP_400_BAD_REQUEST)
 
         response = self.client.post(url, FoodCalorieViewSetTests.data_calorie_missing)
+        self.assertEqual(response.status_code, status.HTTP_400_BAD_REQUEST)
+
+        response = self.client.post(url, FoodCalorieViewSetTests.data_calorie_negative)
         self.assertEqual(response.status_code, status.HTTP_400_BAD_REQUEST)
         
     
@@ -170,3 +179,28 @@ class FoodCalorieViewSetTests(APITestCase):
         response = self.client.put(reverse('foodcalories-detail', args=[2]))
         self.assertEqual(response.status_code, status.HTTP_404_NOT_FOUND)
 
+
+class FoodCalorieTestCase(TestCase):
+    def setUp(self):
+        user_1 = get_user_model().objects.create_user('yuvraj', password='yuvraj123')
+        user_2 = get_user_model().objects.create_user('adarsh', password='adarsh123')
+        FoodCalorie.objects.create(name="food1", calorie=100, consumed_at=timezone.now(), user=user_1)
+        FoodCalorie.objects.create(name="food2", calorie=200, consumed_at=timezone.now(), user=user_1)
+        FoodCalorie.objects.create(name="food3", calorie=300, consumed_at=timezone.now(), user=user_2)
+        FoodCalorie.objects.create(name="food4", calorie=500, consumed_at=timezone.now(), user=user_1)
+
+    def test_food_calorie_get_no_entries(self):
+        now = timezone.now()
+        start1 = now - timedelta(days=1)
+        start2 = now - timedelta(days=2)
+        self.assertEqual(FoodCalorie.get_no_entries(start1, now), 4)
+        self.assertEqual(FoodCalorie.get_no_entries(start2, start1), 0)
+        self.assertEqual(FoodCalorie.get_no_entries(start2, now), 4)
+
+    def test_food_calorie_get_avg_calorie_per_user(self):
+        now = timezone.now()
+        start1 = now - timedelta(days=1)
+        start2 = now - timedelta(days=2)
+        self.assertTrue(math.isnan(FoodCalorie.get_avg_calorie_per_user(start2, start1)))
+        self.assertEqual(FoodCalorie.get_avg_calorie_per_user(start1, now), 550)
+        self.assertEqual(FoodCalorie.get_avg_calorie_per_user(start2, now), 550)

@@ -5,7 +5,7 @@ class FoodCalorieSerializer(serializers.ModelSerializer):
     is_inactive = serializers.BooleanField(required=False)
     class Meta:
         model = FoodCalorie
-        exclude = ['user']
+        exclude = ['user', 'created_at']
     
     def validate_calorie(self, value):
         if value and value < 0:

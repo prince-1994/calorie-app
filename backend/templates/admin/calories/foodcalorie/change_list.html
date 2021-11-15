@@ -39,16 +39,17 @@
 
 {% block content %}
   <div id="content-main">
-    <div style="display: flex;">
+    <div>
     <div style="margin-right: 50px;">
       <h3>No Of Entries</h3>
-      <p><span>Last 7 days: </span>{{ no_of_entry_last_7_days }}</p>
-    <p><span>Last to last 7 days: </span>{{ no_of_entry_last_to_last_7_days }}</p>
+      <p><span>{{ date_4 }} to {{ date_3 }} : </span>{{ no_of_entry_date_4_to_date_3 }}</p>
+      <p><span>{{ date_2 }} to {{ date_1 }} : </span>{{ no_of_entry_date_2_to_date_1 }}</p>
+    
     </div>
       <div>
     
     <h3>Avg Calories Per User</h3>
-    <p><span>Last 7 days: </span>{{ avg_calories_per_user_last_7_day }}</p>
+    <p><span>{{ date_2 }} to {{ date_1 }} : </span>{{ avg_calories_per_user_date_2_to_date_1 }}</p>
     </div>
   </div>
     
