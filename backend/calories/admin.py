@@ -21,7 +21,6 @@ class FoodCalorieAdmin(admin.ModelAdmin):
         extra_context['no_of_entry_date_2_to_date_1'] = FoodCalorie.get_no_entries(date_2, date_1 + delta_1)
         extra_context['no_of_entry_date_4_to_date_3'] = FoodCalorie.get_no_entries(date_4, date_3)
         extra_context['avg_calories_per_user_date_2_to_date_1'] = FoodCalorie.get_avg_calorie_per_user(date_2, date_1 + delta_1)
-        print(extra_context)
         return super().changelist_view(request, extra_context=extra_context)
     
 
