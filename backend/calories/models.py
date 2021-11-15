@@ -8,11 +8,11 @@ class FoodCalorie(models.Model):
     calorie = models.PositiveIntegerField()
     user = models.ForeignKey(get_user_model(), on_delete=models.CASCADE)
     is_inactive = models.BooleanField(default=False)
-    created_at = models.DateTimeField(default=timezone.now())
+    created_at = models.DateTimeField(default=timezone.now)
 
     @classmethod
     def get_no_entries(cls, start, end):
-        return cls.objects.filter(created_at__gte = start, created_at__lte = end).count()
+        return cls.objects.filter(created_at__gte = start, created_at__lt = end).count()
 
     @classmethod
     def get_avg_calorie_per_user(cls, start, end):
