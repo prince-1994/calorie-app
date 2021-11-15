@@ -1,6 +1,6 @@
 from django.db import models
 from django.contrib.auth import get_user_model
-
+from django.utils import timezone
 
 class FoodCalorie(models.Model):
     consumed_at = models.DateTimeField()
@@ -8,7 +8,7 @@ class FoodCalorie(models.Model):
     calorie = models.PositiveIntegerField()
     user = models.ForeignKey(get_user_model(), on_delete=models.CASCADE)
     is_inactive = models.BooleanField(default=False)
-    created_at = models.DateTimeField(auto_now_add=True)
+    created_at = models.DateTimeField(default=timezone.now())
 
     @classmethod
     def get_no_entries(cls, start, end):

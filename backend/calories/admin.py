@@ -5,6 +5,7 @@ from datetime import timedelta
 
 class FoodCalorieAdmin(admin.ModelAdmin):
     list_display = ('name', 'consumed_at', 'calorie', 'user', 'created_at')
+    ordering = ('-created_at',)
 
     def changelist_view(self, request, extra_context={}):
         date_format = "%d %b, %Y"
