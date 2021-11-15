@@ -8,7 +8,11 @@
           </b-navbar-item>
         </template>
         <template #start> </template>
-        <template #end> </template>
+        <template #end
+          ><b-navbar-item v-if="$store.state.authenticated">
+            <p class="is-capitalized has-text-weight-semibold"> Hi {{ $store.state.userProfile.user.username }}</p>
+          </b-navbar-item>
+        </template>
       </b-navbar>
       <div class="">
         <b-message

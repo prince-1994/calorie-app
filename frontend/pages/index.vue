@@ -1,6 +1,14 @@
 <template>
   <div>
     <section class="section">
+      <!-- <div>
+        <p v-if="$store.state.authenticated" class="p-3 is-size-5">
+          <strong>
+            Hi , you can manage your
+            entries here.
+          </strong>
+        </p>
+      </div> -->
       <div class="buttons">
         <b-button
           type="is-danger"

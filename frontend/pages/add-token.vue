@@ -1,12 +1,12 @@
 <template>
-  <div>
+  <section class="section">
     <form @submit.prevent="saveToken">
       <b-field label="Token">
         <b-input v-model="token"></b-input>
       </b-field>
       <b-button native-type="submit" type="is-primary">Save Token</b-button>
     </form>
-  </div>
+  </section>
 </template>
 
 <script>
@@ -28,6 +28,10 @@ export default {
       this.$store.dispatch('saveToken', this.token).then(() => {
         if (this.$store.state.authenticated) {
           this.$router.push('/')
+          this.$store.dispatch('addTemporaryMessage', {
+            message: `Welcome ${this.$store.state.userProfile.user.username}`,
+            type: 'success'
+          })
         }
       })
     },
