@@ -9,7 +9,7 @@
         </template>
         <template #start> </template>
         <template #end
-          ><b-navbar-item v-if="$store.state.authenticated">
+          ><b-navbar-item v-if="$store.state.authenticated" tag="router-link" :to="{ path: '/add-token' }">
             <p class="is-capitalized has-text-weight-semibold"> Hi {{ $store.state.userProfile.user.username }}</p>
           </b-navbar-item>
         </template>
