@@ -1,4 +1,4 @@
-# Simple Calorie App
+# Diet Management App
 
 ## Build Setup
 
