@@ -6,7 +6,7 @@ Build setup instructions for running frontend and backend are provided in the re
 
 ## Description
 
-This is simple calorie app for demo purposes. Some of the features of the demo app are listed below.
+This is diet management app for demo purposes. Some of the features of the demo app are listed below.
 
 1. User can track their calories on daily basis.
 2. Users can create, update and delete entries.
